@@ -73,15 +73,15 @@ print("Welcome to 'The Adventure'! \n")
 character = random.randint(1,3)
 
 if character == 1:
-    player = Player("Jack", 50, 100, 20, 10)
+    player = Player("Jack", 0, 100, 20, 10)
     print("You have landed with Jack, he specialises in damage")
     
 elif character == 2:
-    player = Player("Billy", 100, 100, 10, 15)
+    player = Player("Billy", 0, 100, 10, 15)
     print("You have landed iwth Billy, he specialises in shields")
 
 elif character == 3:
-    player = Player("Wizas", 150, 75, 15, 20)
+    player = Player("Wizas", 0, 75, 15, 20)
     print("You have landed with Wizas, he is an all-rounder")
 
 
@@ -96,3 +96,4 @@ if firstDir == 1:
     print("You turn towards the left")
 
     battle(player, opponent)
+
