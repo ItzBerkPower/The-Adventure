@@ -19,20 +19,18 @@ class Opponent:
 
 def battle(Player, Opponent):
 
-    print("You encountered a monster!")
-
     while Player.health and Opponent.health > 0:
 
         print(f"Your health: {Player.health} \n Opponent health: {Opponent.health}")
 
         enemy_move = random.randint(1,2)
-        round_attack = int(input("Pick your first move, \n 1 = Punch \n 2 = Heal"))
+        round_attack = int(input("Pick your move, \n 1 = Punch \n 2 = Heal \n-> "))
 
         if round_attack == 1:
             if enemy_move == 1:
                 print("You chose punch \nOpponent chose punch ")
                 Opponent.health -= player.damage
-                Player.health -= opponent.damge
+                Player.health -= opponent.damage
                 print(f"Your health: {Player.health} \n Opponent health: {Opponent.health}")
         
             elif enemy_move == 2: 
@@ -90,10 +88,19 @@ elif character == 3:
 opponent = Opponent("Monster", 100, 100, 20, 40)
 
 print("You enter the forest")
-firstDir = int(input("Do you want to take a left, or right, or go straight down the middle? \n 1 = Left, \n 2 = Right, \n 3 = Middle"))
+firstDir = int(input("Do you want to take a left, or right, or go straight down the middle? \n 1 = Left, \n 2 = Right, \n 3 = Middle \n-> "))
 
 if firstDir == 1:
-    print("You turn towards the left")
+    print("You turn towards the left, and see a monster in the corner of your eye")
+    print("It runs towards you")
 
     battle(player, opponent)
 
+elif firstDir == 2:
+    print("You turn towards the right, and are greeted by a monster standing right infront of you")
+
+    battle(player, opponent)
+
+elif firstDir == 2:
+    print("You go down the center")
+    print("You walk over the bridge and continue on")
