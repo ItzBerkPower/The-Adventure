@@ -44,21 +44,20 @@ def battle(Player, Opponent):
                         a = Player.shield - opponent.damage
                         b = a * -1
                         c = opponent.damage - b
+                        Player.shield == 0
                         Player.health -= c
 
                     elif Player.shield - opponent.damage > 0: 
                         Player.shield -= opponent.damage
 
-                    else: Player.health -= opponent.damage
+                    else: 
+                        Player.health -= opponent.damage
 
                     Opponent.health -= player.damage
 
                 elif enemy_move == 2:
-                    print("You chose punch \n Opponent chose punch ")
-                    while Player.shield > 0:
-                        Player.shield -= opponent.damage
-                    else:
-                        Player.health -= opponent.damage
+                    print("You chose punch \n Opponent chose heal ")
+                    Opponent.health += opponent.heal
                     Opponent.health -= player.damage
 
             elif round_attack == 2:
@@ -78,16 +77,16 @@ def battle(Player, Opponent):
                         a = Player.shield - opponent.damage
                         b = a * -1
                         c = opponent.damage - b
+                        Player.shield == 0
                         Player.health -= c
-
+    
                     elif Player.shield - opponent.damage > 0: 
                         Player.shield -= opponent.damage
 
                     else: 
                         Player.health -= opponent.damage
 
-                    
-
+                    Opponent.health -= player.damage
 
                 elif enemy_move == 2: 
                     print("You chose punch \nOpponent chose heal")
@@ -98,23 +97,37 @@ def battle(Player, Opponent):
             elif round_attack == 2:
                 if enemy_move == 1:
                     print("You chose healing \nOppponent chose punch ")
-                    while Player.health <= 100:
-                        Player.health += player.heal
-                    else:
-                        Player.shield += player.heal
+
+                    if Player.health + player.heal > 100:
+
+                        a = Player.health + player.heal
+                        b = a - 100
+                        Player.health == 100
+                        Player.shield += b
                     
-                    while Player.shield > 0:
-                        Player.shield -= opponent.damage
-                    else: 
-                        Player.health -= opponent.damage
-                    Player.health -= opponent.damage
+                    elif Player.health + player.heal < 100:
+                        Player.health += player.heal
+
+                    else:
+                        Player.shield += Player.heal
+                    
+                    Opponent.health -= player.damage
                 
                 elif enemy_move == 2:
                     print("You chose healing \nOpponent chose healing")
-                    while Player.health <= 100:
+                    if Player.health + player.heal > 100:
+
+                        a = Player.health + player.heal
+                        b = a - 100
+                        Player.health == 100
+                        Player.shield += b
+
+                    elif Player.health + player.heal < 100:
                         Player.health += player.heal
+
                     else:
-                        Player.shield += player.heal
+                        Player.shield += Player.heal
+                    
                     Opponent.health += opponent.heal
             
     else: 
@@ -130,8 +143,8 @@ def battle(Player, Opponent):
 
     
     
-#Beginning of the game 
-
+#Beginning of the game
+os.system('cls')
 print("Welcome to 'The Adventure'! \n")
 
 
@@ -173,6 +186,8 @@ elif firstDir == 2:
 elif firstDir == 2:
     print("\nYou go down the center")
     print("You walk over the bridge and continue on")
+
+
 
 
 
