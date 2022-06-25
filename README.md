@@ -3,8 +3,9 @@ Text-based Adventure Game.
 
 - The game requires no external downloads apart from Python! Thus being said, the most recent version of Python is recommended
 
-Big thanks to Anonymous-Hex for testing the cdoe, and catching errors, his Github can be found here;
-  
+Contributions to Code:
+- Big thanks to Anonymous-Hex for testing the code, and catching errors, his Github can be found here;
+  https://github.com/Anonymous-Hex
 
 
 
