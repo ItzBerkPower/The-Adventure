@@ -28,37 +28,45 @@ class Opponent:
 def battle(Player, Opponent):
 
     while Player.health and Opponent.health > 0:
-
-        print(f"Your health: {Player.health} \n Opponent health: {Opponent.health} \n Player Shield: {Player.shield}")
+        
+        print(f"\nYour health: {Player.health} \nOpponent health: {Opponent.health} \nPlayer Shield: {Player.shield} \nOpponent Shield: {Opponent.shield}")
             
         enemy_move = random.randint(1,2)
-        round_attack = int(input("Pick your move, \n 1 = Punch \n 2 = Heal \n-> "))
+        round_attack = int(input("\nPick your move, \n 1 = Punch \n 2 = Heal \n-> "))
 
         if Player.shield >= 150:
 
             if round_attack == 1:
                 if enemy_move == 1:
                     print("You chose punch \nOpponent chose punch ")
+
+                    # Opponent chose punch
                     if Player.shield - opponent.damage < 0:
                         
                         a = Player.shield - opponent.damage
                         b = a * -1
-                        c = opponent.damage - b
-                        Player.shield == 0
-                        Player.health -= c
+
+                        Player.shield = 0
+                        Player.health -= b
 
                     elif Player.shield - opponent.damage > 0: 
                         Player.shield -= opponent.damage
 
-                    else: 
+                    else:
                         Player.health -= opponent.damage
 
+                    #You chose punch
                     Opponent.health -= player.damage
 
                 elif enemy_move == 2:
                     print("You chose punch \n Opponent chose heal ")
+
+                    # Opponent chose healing
                     Opponent.health += opponent.heal
+
+                    # You chose punch
                     Opponent.health -= player.damage
+
 
             elif round_attack == 2:
                 while round_attack == 2:
@@ -68,29 +76,37 @@ def battle(Player, Opponent):
                     if inner_round_attack == 1:
                         break
 
+ 
         else:
             if round_attack == 1:
                 if enemy_move == 1:
                     print("You chose punch \nOpponent chose punch ")
+                    
+                    # Opponent chose punch
                     if Player.shield - opponent.damage < 0:
                         
                         a = Player.shield - opponent.damage
                         b = a * -1
-                        c = opponent.damage - b
-                        Player.shield == 0
-                        Player.health -= c
+
+                        Player.shield = 0
+                        Player.health -= b
     
                     elif Player.shield - opponent.damage > 0: 
                         Player.shield -= opponent.damage
 
-                    else: 
+                    else:
                         Player.health -= opponent.damage
 
+                    # You chose punch
                     Opponent.health -= player.damage
 
                 elif enemy_move == 2: 
                     print("You chose punch \nOpponent chose heal")
+
+                    # Opponent chose heal
                     Opponent.health += opponent.heal
+
+                    # You chose punch
                     Opponent.health -= player.damage
 
             
@@ -98,6 +114,7 @@ def battle(Player, Opponent):
                 if enemy_move == 1:
                     print("You chose healing \nOppponent chose punch ")
 
+                    # Player chose healing
                     if Player.health + player.heal > 100:
 
                         a = Player.health + player.heal
@@ -110,8 +127,22 @@ def battle(Player, Opponent):
 
                     else:
                         Player.shield += Player.heal
-                    
-                    Opponent.health -= player.damage
+
+                    # Opponent chose punch
+                    if Player.shield - opponent.damage < 0:
+                        
+                        a = Player.shield - opponent.damage
+                        b = a * -1
+
+                        Player.shield = 0
+                        Player.health -= b
+
+                    elif Player.shield - opponent.damage > 0: 
+                        Player.shield -= opponent.damage
+
+                    else:
+                        Player.health -= opponent.damage
+
                 
                 elif enemy_move == 2:
                     print("You chose healing \nOpponent chose healing")
@@ -141,7 +172,14 @@ def battle(Player, Opponent):
             print("It's a draw, you have been defeated, the game is over")
 
 
+
     
+    
+
+
+
+
+
     
 #Beginning of the game
 os.system('cls')
