@@ -167,31 +167,70 @@ def battle(Player, Opponent):
     else: 
         if Player.health <= 0:
             print("You have been defeated, the game is over")
+
+            Player.health = 0
+            return Player.health
         
         elif Opponent.health <= 0:
             print("You have won the match, moving on...")
 
-            f = open("database.txt", "a")
-            f.write("")
-        
+            return Player.health
+            Player.shield = 0
+
         elif Opponent.health and Player.health <= 0:
             print("It's a draw, you have been defeated, the game is over")
-
-
-
-
-    
-    
-
-
-
-
-
     
 #Beginning of the game
 os.system('cls')
 print("Welcome to 'The Adventure'! \n")
 time.sleep(1)
+
+#Opening an account, reaching an existing account
+has_account = input("Do you have an account? \n -> ")
+
+if has_account.upper() == "NO":
+
+    user_name = input("What is your name? \n -> ")
+
+    #Reading file
+    with open("database.json", "r") as f:
+        data = json.load(f)
+
+    for i in data:
+        while i[0] == user_name:
+            print("You already have an account with that name")
+
+            if i[0] != user_name:
+                break
+    
+    data.append([user_name, 0])
+
+    with open("database.json", "w") as f:
+        json.dump(data, f, indent=4)
+
+
+    
+elif has_account.upper() == "YES":
+
+    user_name = input("What is your name? \n -> ")
+
+    #with open("database.json", "r") as f:
+    #    data = json.load(f)
+
+    #for e in data:
+    #    if e[0] == user_name:
+    #        use_account = input("Found your account, would you like to use it?")
+
+
+else:
+    while has_account.upper() != "YES" or "NO":
+        print("Your input is wrong")
+    
+        if has_account.upper() == "YES" or "NO":
+            break
+
+        
+
 
 #Choosing Character -- 
 
@@ -225,6 +264,7 @@ if firstDir == 1:
     battle(player, opponent)
 
 
+
 elif firstDir == 2:
     print("\nYou turn towards the right, and are greeted by a monster standing right infront of you")
 
@@ -233,10 +273,7 @@ elif firstDir == 2:
 elif firstDir == 2:
     print("\nYou go down the center")
     print("You walk over the bridge and continue on")
-
-
-
-
+    
 
 
 
