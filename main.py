@@ -174,25 +174,30 @@ def battle(Player, Opponent):
         elif Opponent.health <= 0:
             print("You have won the match, moving on...")
 
+            
             return Player.health
-            Player.shield = 0
+            return Player.shield
 
         elif Opponent.health and Player.health <= 0:
             print("It's a draw, you have been defeated, the game is over")
     
+            Player.health = 0
+            return Player.health
+
 #Beginning of the game
 os.system('cls')
 print("Welcome to 'The Adventure'! \n")
 time.sleep(1)
 
 #Opening an account, reaching an existing account
-has_account = input("Do you have an account? \n -> ")
+has_account = input("\nDo you have an account? \n -> ")
 
 if has_account.upper() == "NO":
 
+    print("\nLets open you an account.")
+    time.sleep(0.75)
     user_name = input("What is your name? \n -> ")
 
-    #Reading file
     with open("database.json", "r") as f:
         data = json.load(f)
 
@@ -214,12 +219,40 @@ elif has_account.upper() == "YES":
 
     user_name = input("What is your name? \n -> ")
 
-    #with open("database.json", "r") as f:
-    #    data = json.load(f)
+    with open("database.json", "r") as f:
+        data = json.load(f)
 
-    #for e in data:
-    #    if e[0] == user_name:
-    #        use_account = input("Found your account, would you like to use it?")
+    for e in data:
+        if e[0] == user_name:
+            use_account = input("\nFound your account, would you like to use it? \n -> ")
+
+            if use_account.upper() == "YES":
+                print("Perfect")
+                
+                for i, e in list(enumerate(data)):
+                    if data[i][0] == user_name:
+                        profile = int(i)
+                        break
+
+            elif use_account.upper() == "NO":
+                print("Lets make you a new account then.\n")
+
+                user_name = input("\nWhat is your name? \n -> ")
+
+                with open("database.json", "r") as f:
+                    data = json.load(f)
+
+                for i in data:
+                    while i[0] == user_name:
+                        print("You already have an account with that name")
+
+                    if i[0] != user_name:
+                        break
+    
+                data.append([user_name, 0])
+
+                with open("database.json", "w") as f:
+                    json.dump(data, f, indent=4)
 
 
 else:
@@ -249,6 +282,9 @@ elif character == 3:
     print("You have landed with Wizas, he is an all-rounder \n")
 
 
+#---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 #Choosing Enemy --
 
 opponent = Opponent("Monster", 0, 100, 20, 10)
@@ -273,7 +309,6 @@ elif firstDir == 2:
 elif firstDir == 2:
     print("\nYou go down the center")
     print("You walk over the bridge and continue on")
-    
 
 
 
