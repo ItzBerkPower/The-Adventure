@@ -1,3 +1,4 @@
+# Imports
 import random
 import os
 from turtle import clear
@@ -212,7 +213,7 @@ if has_account.upper() == "NO":
         if i[0] != user_name:
             break
     
-    data.append([user_name, 0, 0, 0, 0, 0," "])
+    data.append([user_name, 0, 0, 0, 0, 0])
 
     for i, e in list(enumerate(data)): 
         if data[i][0] == user_name:
@@ -223,19 +224,6 @@ if has_account.upper() == "NO":
         json.dump(data, f, indent=4)
 
 
-
-
-
-
-
-
-
-    
-
-
-    
-
-
 elif has_account.upper() == "YES":
 
     with open("database.json", "r") as f:
@@ -243,88 +231,69 @@ elif has_account.upper() == "YES":
 
     user_name = input("What is your name? \n -> ")
 
-    
+
+    while not any(user_name == stuff[0] for stuff in data):
+        print("Account not found, please try again \n ")
+
+        user_name = input("What is your name? \n -> ")
 
     if any(user_name == stuff[0] for stuff in data):
 
+        use_account = input("\nFound your account, would you like to use it? \n -> ")
+
+        if use_account.upper() == "YES":
+            print("Perfect")
             
-            use_account = input("\nFound your account, would you like to use it? \n -> ")
-
-            if use_account.upper() == "YES":
-                print("Perfect")
-            
-                for i, e in list(enumerate(data)):
-                    if data[i][0] == user_name:
-                          profile = int(i)
-                          break
-                        
+            for i, e in list(enumerate(data)):
+                if data[i][0] == user_name:
+                    profile = int(i)
+                    break
 
 
+        elif use_account.upper() == "NO":
+            print("Lets make you a new account then.\n")
 
+            user_name = input("\nWhat is your name? \n -> ")
 
+            with open("database.json", "r") as f:
+                data = json.load(f)
 
+            for i in data:
+                while i[0] == user_name:
+                    print("You already have an account with that name")
+                    user_name = input("\nWhat is your name? \n -> ")
 
-            elif use_account.upper() == "NO":
-                print("Lets make you a new account then.\n")
-
-                user_name = input("\nWhat is your name? \n -> ")
-
-                with open("database.json", "r") as f:
-                    data = json.load(f)
-
-                for i in data:
-                    while i[0] == user_name:
-                        print("You already have an account with that name")
-                        user_name = input("\nWhat is your name? \n -> ")
-
-                    else:
-                        break
+                else:
+                    break
                 
-                data.append([user_name, 0, 0, 0, 0, 0, " "])
+            data.append([user_name, 0, 0, 0, 0, 0])
 
-                for i, e in list(enumerate(data)):
-                    if data[i][0] == user_name:
-                        profile = int(i)
-                        break
+            for i, e in list(enumerate(data)):
+                if data[i][0] == user_name:
+                    profile = int(i)
+                    break
                                 
-                with open("database.json", "w") as f:
-                    json.dump(data, f, indent=4)
-                    
-
-
-                            
+            with open("database.json", "w") as f:
+                json.dump(data, f, indent=4)
 
 
 
+
+
+
+
+                        
 
 else:
     while has_account.upper() != "YES" or "NO":
         print("Your input is wrong")
 
         has_account = input("\nDo you have an account? \n -> ")
+
         if has_account.upper() == "YES" or "NO":
             break
     
-        
 
-        
-
-
-#Choosing Character -- 
-
-#character = random.randint(1,3)
-
-#if character == 1:
-#    player = Player("Jack", 0, 100, 10, 10)
-#    print("You have landed with Jack, he specialises in damage \n")
-#    
-#elif character == 2:
-#    player = Player("Billy", 0, 100, 10, 15)
-#    print("You have landed with Billy, he specialises in shields \n")
-#
-#elif character == 3:
-#    player = Player("Wizas", 0, 100, 10, 20)
-#    print("You have landed with Wizas, he is an all-rounder \n")
 
 
 
@@ -420,7 +389,6 @@ elif firstDir == 3:
 # data[4] = damage
 # data[5] = heal
 # data[6] = player_name
-
 
 
 
