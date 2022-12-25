@@ -166,25 +166,55 @@ def battle(Player, Opponent):
                     Opponent.health += opponent.heal
             
     else: 
+
+        # Player defeated
+
         if Player.health <= 0:
             print("You have been defeated, the game is over")
 
             Player.health = 0
-            return Player.health
+
+            with open("database.json", "r") as f:
+                data = json.load(f)
+            
+            data[profile][1] = Player.health
+
+            with open("database.json", "w") as f:
+                json.dump(data, f, indent=4)
+
         
+        # Opponent defeated
+
         elif Opponent.health <= 0:
             print("You have won the match, moving on...")
 
             
-            return Player.health, Player.shield
+            with open("database.json", "r") as f:
+                data = json.load(f)
+            
+            data[profile][1] = Player.health
+
+            with open("database.json", "w") as f:
+                json.dump(data, f, indent=4)
+            
+
+
+        # Both defeated (Draw)
 
         elif Opponent.health and Player.health <= 0:
 
-
             print("It's a draw, you have been defeated, the game is over")
-    
+
             Player.health = 0
-            return Player.health
+
+            with open("database.json", "r") as f:
+                data = json.load(f)
+            
+            data[profile][1] = Player.health
+
+            with open("database.json", "w") as f:
+                json.dump(data, f, indent=4)
+
 
 
     
@@ -194,105 +224,98 @@ os.system('cls')
 print("Welcome to 'The Adventure'! \n")
 time.sleep(1)
 
-#Opening an account, reaching an existing account
+# Opening an account, reaching an existing account
 has_account = input("\nDo you have an account? \n -> ")
 
-if has_account.upper() == "NO":
+while has_account.upper() not in ("YES", "NO", "Y", "N"):
 
-    print("\nLets open you an account.")
-    time.sleep(0.75)
-    user_name = input("What is your name? \n -> ")
+    print("Unidentified Answer, Options Are:\n yes or y\n no or n \n")
 
-    with open("database.json", "r") as f:
-        data = json.load(f)
-
-    for i in data:
-        while i[0] == user_name:
-            print("You already have an account with that name")
-
-        if i[0] != user_name:
-            break
-    
-    data.append([user_name, 0, 0, 0, 0, 0])
-
-    for i, e in list(enumerate(data)): 
-        if data[i][0] == user_name:
-            profile = int(i)
-            break
-
-    with open("database.json", "w") as f:
-        json.dump(data, f, indent=4)
+    has_account = input("\nDo you have an account? \n -> ")
 
 
-elif has_account.upper() == "YES":
 
-    with open("database.json", "r") as f:
-        data = json.load(f)
+if has_account.upper() in ("YES", "NO", "Y", "N"):
 
-    user_name = input("What is your name? \n -> ")
+    if has_account.upper() == "NO" or has_account.upper == "N":
+
+        print("\nLets open you an account.")
+        time.sleep(0.75)
+        user_name = input("What is your name? \n -> ")
+
+        with open("database.json", "r") as f:
+            data = json.load(f)
+
+        for i in data:
+            while i[0] == user_name:
+                print("You already have an account with that name")
+
+            if i[0] != user_name:
+                break
+            
+        data.append([user_name, 0, 0, 0, 0, 0, 0])
+
+        for i, e in list(enumerate(data)): 
+            if data[i][0] == user_name:
+                profile = int(i)
+                break
+
+        with open("database.json", "w") as f:
+            json.dump(data, f, indent=4)
 
 
-    while not any(user_name == stuff[0] for stuff in data):
-        print("Account not found, please try again \n ")
+    elif has_account.upper() == "YES" or has_account.upper() == "Y":
+
+        with open("database.json", "r") as f:
+                data = json.load(f)
 
         user_name = input("What is your name? \n -> ")
 
-    if any(user_name == stuff[0] for stuff in data):
+        while not any(user_name == stuff[0] for stuff in data):
+            print("Account not found, please try again \n ")
 
-        use_account = input("\nFound your account, would you like to use it? \n -> ")
+            user_name = input("What is your name? \n -> ")
 
-        if use_account.upper() == "YES":
-            print("Perfect")
-            
-            for i, e in list(enumerate(data)):
-                if data[i][0] == user_name:
-                    profile = int(i)
-                    break
+        if any(user_name == stuff[0] for stuff in data):
 
+            use_account = input("\nFound your account, would you like to use it? \n -> ")
 
-        elif use_account.upper() == "NO":
-            print("Lets make you a new account then.\n")
-
-            user_name = input("\nWhat is your name? \n -> ")
-
-            with open("database.json", "r") as f:
-                data = json.load(f)
-
-            for i in data:
-                while i[0] == user_name:
-                    print("You already have an account with that name")
-                    user_name = input("\nWhat is your name? \n -> ")
-
-                else:
-                    break
-                
-            data.append([user_name, 0, 0, 0, 0, 0])
-
-            for i, e in list(enumerate(data)):
-                if data[i][0] == user_name:
-                    profile = int(i)
-                    break
-                                
-            with open("database.json", "w") as f:
-                json.dump(data, f, indent=4)
+            if use_account.upper() == "YES":
+                print("Perfect")
+                    
+                for i, e in list(enumerate(data)):
+                    if data[i][0] == user_name:
+                        profile = int(i)
+                        break
 
 
+            elif use_account.upper() == "NO":
+                print("Lets make you a new account then.\n")
 
+                user_name = input("\nWhat is your name? \n -> ")
 
+                with open("database.json", "r") as f:
+                    data = json.load(f)
 
+                for i in data:
+                    while i[0] == user_name:
+                        print("You already have an account with that name")
+                        user_name = input("\nWhat is your name? \n -> ")
 
-
+                    else:
+                        break
                         
+                data.append([user_name, 0, 0, 0, 0, 0, 0])
 
-else:
-    while has_account.upper() != "YES" or "NO":
-        print("Your input is wrong")
+                for i, e in list(enumerate(data)):
+                    if data[i][0] == user_name:
+                        profile = int(i)
+                        break
+                                        
+                with open("database.json", "w") as f:
+                    json.dump(data, f, indent=4)
 
-        has_account = input("\nDo you have an account? \n -> ")
 
-        if has_account.upper() == "YES" or "NO":
-            break
-    
 
 
 
@@ -301,43 +324,51 @@ with open("database.json", "r") as f:
         data = json.load(f)
 
 if data[profile][3] == 0:
-    if data[profile][6] != 1:
-        pass
 
-    else:
-        print("Since you opened a new account, lets make your player")
-        name = random.randint(1,3)
+    print("Since you opened a new account, lets make your player")
+    name = random.randint(1,3)
 
-        if name == 1:
-            player = Player("Wizas", 0, 100, 20, 10)
-            print("Your player name is Wizas")
+    if name == 1:
+        print("Your player name is Wizas")
+        #player = Player("Wizas", 100, 20, 10)
 
-            data[profile][1] == 100
-            data[profile][4] == 20
-            data[profile][5] == 10
-            data[profile].append("Wizas")
+        data[profile][1] = 100
+        data[profile][4] = 20
+        data[profile][5] = 10
+        data[profile].append("Wizas")
 
-        elif name == 2:
-            player = Player("Jack", 0, 100, 20, 10)
-            print("Your player name is Jack")
+        data[profile][3] += 1
 
-            data[profile][1] == 100
-            data[profile][4] == 20
-            data[profile][5] == 10
-            data[profile].append("Jack")
+        with open("database.json", "w") as f:
+            json.dump(data, f, indent=4)
 
-        elif name == 3:
-            player = Player("Billy", 0, 100, 20, 10)
-            print("Your player name is Billy")
+    elif name == 2:
+        #player = Player("Jack", 100, 20, 10)
+        print("Your player name is Jack")
 
-            data[profile][1] == 100
-            data[profile][4] == 20
-            data[profile][5] == 10
-            data[profile].append("Billy")
+        data[profile][1] = 100
+        data[profile][4] = 20
+        data[profile][5] = 10
+        data[profile].append("Jack")
+    
+        data[profile][3] += 1
 
-    with open("database.json", "w") as f:
-        json.dump(data, f, indent=4)
+        with open("database.json", "w") as f:
+            json.dump(data, f, indent=4)
 
+    elif name == 3:
+        #player = Player("Billy", 100, 20, 10)
+        print("Your player name is Billy")
+
+        data[profile][1] = 100
+        data[profile][4] = 20
+        data[profile][5] = 10
+        data[profile].append("Billy")
+
+        data[profile][3] += 1
+
+        with open("database.json", "w") as f:
+            json.dump(data, f, indent=4)
 
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -349,31 +380,44 @@ opponent = Opponent("Monster", 0, 100, 20, 10)
 
 
 delay_print("You enter the forest \n")
+
+
 firstDir = int(input("Do you want to take a left, or right, or go straight down the middle? \n 1 = Left, \n 2 = Right, \n 3 = Middle \n-> "))
 
 if firstDir == 1:
     print("\nYou turn towards the left, and see a monster in the corner of your eye")
     print("\nIt runs towards you")
 
+    with open("database.json", "r") as f:
+        data = json.load(f)
+
+    if data[profile][7] == "Wizas":
+        player = Player("Wizas", data[profile][6], data[profile][1], data[profile][4], data[profile][5])
+
+    elif data[profile][7] == "Jack":
+        player = Player("Jack", data[profile][6], data[profile][1], data[profile][4], data[profile][5])
+    
+    elif data[profile][7] == "Billy":
+        player = Player("Billy", data[profile][6], data[profile][1], data[profile][4], data[profile][5])
+
     battle(player, opponent)
 
-    if Player.health > 0:
+    if data[profile][1] > 0:
 
-        print("\nYou've earned 50 coins")
+        print("\nYou've earned 50 coins \nYou've earned 5 xp!")
     
         with open("database.json", "r") as f:
             data = json.load(f)
 
         data[profile][2] += 50
+        data[profile][3] += 5
 
         with open("database.json", "w") as f:
             json.dump(data, f, indent=4)
 
 
-
-
 elif firstDir == 2:
-    print("\nYou turn towards the right, and are greeted by a monster standing right infront of you")
+    print("\nYou turn towards the right, and are greeted by a monster standing right infront of you, but you dodge it")
 
     battle(player, opponent)
 
@@ -382,19 +426,14 @@ elif firstDir == 3:
     print("You walk over the bridge and continue on")
     
 
-# data[0] = Username
-# data[1] = health
-# data[2] = coins
-# data[3] = exp
-# data[4] = damage
-# data[5] = heal
-# data[6] = player_name
-
-
-
-
-
-
+# data[profile][0] = Username
+# data[profile][1] = health
+# data[profile][2] = coins
+# data[profile][3] = exp
+# data[profile][4] = damage
+# data[profile][5] = heal
+# data[profile][6] = shield
+# data[profile][7] = Player username
 
 
 
