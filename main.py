@@ -30,8 +30,11 @@ def delay_print(s):
 
 def battle(Player, Opponent):
 
+    os.system('cls')
+
     while Player.health and Opponent.health > 0:
         
+        time.sleep(0.5)
         print(f"\nYour health: {Player.health} \nOpponent health: {Opponent.health} \nPlayer Shield: {Player.shield} \nOpponent Shield: {Opponent.shield}")
             
         enemy_move = random.randint(1,2)
@@ -42,6 +45,8 @@ def battle(Player, Opponent):
 
             if round_attack == 1:
                 if enemy_move == 1:
+
+                    time.sleep(0.5)
                     print("You chose punch \nOpponent chose punch ")
 
                     # Opponent chose punch
@@ -63,6 +68,8 @@ def battle(Player, Opponent):
                     Opponent.health -= player.damage
 
                 elif enemy_move == 2:
+
+                    time.sleep(0.5)
                     print("You chose punch \n Opponent chose heal ")
 
                     # Opponent chose healing
@@ -84,6 +91,8 @@ def battle(Player, Opponent):
         else:
             if round_attack == 1:
                 if enemy_move == 1:
+
+                    time.sleep(0.5)
                     print("You chose punch \nOpponent chose punch ")
                     
                     # Opponent chose punch
@@ -105,6 +114,8 @@ def battle(Player, Opponent):
                     Opponent.health -= player.damage
 
                 elif enemy_move == 2: 
+
+                    time.sleep(0.5)
                     print("You chose punch \nOpponent chose heal")
 
                     # Opponent chose heal
@@ -116,6 +127,8 @@ def battle(Player, Opponent):
             
             elif round_attack == 2:
                 if enemy_move == 1:
+
+                    time.sleep(0.5)
                     print("You chose healing \nOppponent chose punch ")
 
                     # Player chose healing
@@ -149,6 +162,8 @@ def battle(Player, Opponent):
 
                 
                 elif enemy_move == 2:
+                    
+                    time.sleep(0.5)
                     print("You chose healing \nOpponent chose healing")
                     if Player.health + player.heal > 100:
 
@@ -241,7 +256,8 @@ if has_account.upper() in ("YES", "NO", "Y", "N"):
 
         print("\nLets open you an account.")
         time.sleep(0.75)
-        user_name = input("What is your name? \n -> ")
+
+        user_name = input("\nWhat is your name? \n -> ")
 
         with open("database.json", "r") as f:
             data = json.load(f)
@@ -262,6 +278,8 @@ if has_account.upper() in ("YES", "NO", "Y", "N"):
 
         with open("database.json", "w") as f:
             json.dump(data, f, indent=4)
+        
+        time.sleep(1)
 
 
     elif has_account.upper() == "YES" or has_account.upper() == "Y":
@@ -269,63 +287,78 @@ if has_account.upper() in ("YES", "NO", "Y", "N"):
         with open("database.json", "r") as f:
                 data = json.load(f)
 
-        user_name = input("What is your name? \n -> ")
+        user_name = input("\nWhat is your name? \n -> ")
 
         while not any(user_name == stuff[0] for stuff in data):
-            print("Account not found, please try again \n ")
+            print("\nAccount not found, please try again \n ")
 
-            user_name = input("What is your name? \n -> ")
+            user_name = input("\nWhat is your name? \n -> ")
 
         if any(user_name == stuff[0] for stuff in data):
-
+            
             use_account = input("\nFound your account, would you like to use it? \n -> ")
 
-            if use_account.upper() == "YES":
-                print("Perfect")
-                    
-                for i, e in list(enumerate(data)):
-                    if data[i][0] == user_name:
-                        profile = int(i)
-                        break
+        
+
+            while use_account.upper() not in ("YES", "Y", "NO", "N"):
+                print("\nUnidentified answer, Options are: \nyes, y \nno, n")
+
+                use_account = input("\nFound your account, would you like to use it? \n -> ")
 
 
-            elif use_account.upper() == "NO":
-                print("Lets make you a new account then.\n")
-
-                user_name = input("\nWhat is your name? \n -> ")
-
-                with open("database.json", "r") as f:
-                    data = json.load(f)
-
-                for i in data:
-                    while i[0] == user_name:
-                        print("You already have an account with that name")
-                        user_name = input("\nWhat is your name? \n -> ")
-
-                    else:
-                        break
+            
+            if use_account.upper() in ("YES", "Y", "NO", "N"):
+            
+                if use_account.upper() == "YES" or use_account.upper() == "Y":
+                    print("\nPerfect")
                         
-                data.append([user_name, 0, 0, 0, 0, 0, 0])
+                    for i, e in list(enumerate(data)):
+                        if data[i][0] == user_name:
+                            profile = int(i)
+                            break
 
-                for i, e in list(enumerate(data)):
-                    if data[i][0] == user_name:
-                        profile = int(i)
-                        break
-                                        
-                with open("database.json", "w") as f:
-                    json.dump(data, f, indent=4)
+                    time.sleep(2)
 
 
+                elif use_account.upper() == "NO" or use_account.upper() == "N":
+                    print("Lets make you a new account then.\n")
+
+                    user_name = input("\nWhat is your name? \n -> ")
+
+                    with open("database.json", "r") as f:
+                        data = json.load(f)
+
+                    for i in data:
+                        while i[0] == user_name:
+                            print("You already have an account with that name")
+                            user_name = input("\nWhat is your name? \n -> ")
+
+                        else:
+                            break
+                            
+                    data.append([user_name, 0, 0, 0, 0, 0, 0])
+
+                    for i, e in list(enumerate(data)):
+                        if data[i][0] == user_name:
+                            profile = int(i)
+                            break
+                                            
+                    with open("database.json", "w") as f:
+                        json.dump(data, f, indent=4)
 
 
 
+
+os.system('cls')
 
 with open("database.json", "r") as f:
         data = json.load(f)
 
 if data[profile][3] == 0:
 
-    print("Since you opened a new account, lets make your player")
+    print("Since you opened a new account, lets make your player \n")
+    time.sleep(1)
+
     name = random.randint(1,3)
 
     if name == 1:
@@ -338,6 +371,8 @@ if data[profile][3] == 0:
         data[profile].append("Wizas")
 
         data[profile][3] += 1
+
+        time.sleep(5)
 
         with open("database.json", "w") as f:
             json.dump(data, f, indent=4)
@@ -353,6 +388,8 @@ if data[profile][3] == 0:
     
         data[profile][3] += 1
 
+        time.sleep(5)
+
         with open("database.json", "w") as f:
             json.dump(data, f, indent=4)
 
@@ -367,6 +404,8 @@ if data[profile][3] == 0:
 
         data[profile][3] += 1
 
+        time.sleep(5)
+
         with open("database.json", "w") as f:
             json.dump(data, f, indent=4)
 
@@ -378,15 +417,26 @@ if data[profile][3] == 0:
 
 opponent = Opponent("Monster", 0, 100, 20, 10)
 
+os.system('cls')
+
+delay_print("Starting game...")
+time.sleep(3)
+
+os.system('cls')
 
 delay_print("You enter the forest \n")
+time.sleep(1)
 
-
-firstDir = int(input("Do you want to take a left, or right, or go straight down the middle? \n 1 = Left, \n 2 = Right, \n 3 = Middle \n-> "))
+firstDir = int(input("\nDo you want to take a left, or right, or go straight down the middle? \n 1 = Left, \n 2 = Right, \n 3 = Middle \n-> "))
 
 if firstDir == 1:
-    print("\nYou turn towards the left, and see a monster in the corner of your eye")
-    print("\nIt runs towards you")
+    time.sleep(2)
+    print("\nYou turn towards the left, and see a monster in the corner of your eye\n")
+
+    time.sleep(1)
+    delay_print("\nIt runs towards you... \n \n")
+
+    time.sleep(2)
 
     with open("database.json", "r") as f:
         data = json.load(f)
@@ -434,7 +484,6 @@ elif firstDir == 3:
 # data[profile][5] = heal
 # data[profile][6] = shield
 # data[profile][7] = Player username
-
 
 
 
