@@ -1,11 +1,12 @@
 # The-Adventure
+
+
 Text-based Adventure Game. 
 
 - The game requires no external downloads apart from Python! Thus being said, the most recent version of Python is recommended
 
-Contributions to Code:
-- Big thanks to Anonymous-Hex for testing the code, and catching errors, his Github can be found here;
-  https://github.com/Anonymous-Hex
+- This was made to help understand the basics of databases and loops, it only has the base of an adventure game, allowing you to add on to it!
+
 
 
 
