@@ -467,13 +467,47 @@ if firstDir == 1:
 
 
 elif firstDir == 2:
-    print("\nYou turn towards the right, and are greeted by a monster standing right infront of you, but you dodge it")
+    time.sleep(2)
+    print("\nYou turn towards the right, and are greeted by a monster standing right infront of you \n")
+
+    time.sleep(1)
+    delay_print("\n It rushes towards you... \n \n")
+
+    time.sleep(2)
+
+    with open("database.json", "r") as f:
+        data = json.load(f)
+
+    if data[profile][7] == "Wizas":
+        player = Player("Wizas", data[profile][6], data[profile][1], data[profile][4], data[profile][5])
+
+    elif data[profile][7] == "Jack":
+        player = Player("Jack", data[profile][6], data[profile][1], data[profile][4], data[profile][5])
+    
+    elif data[profile][7] == "Billy":
+        player = Player("Billy", data[profile][6], data[profile][1], data[profile][4], data[profile][5])
 
     battle(player, opponent)
+
+    if data[profile][1] > 0:
+
+        print("\nYou've earned 50 coins \nYou've earned 5 xp!")
+    
+        with open("database.json", "r") as f:
+            data = json.load(f)
+
+        data[profile][2] += 50
+        data[profile][3] += 5
+
+        with open("database.json", "w") as f:
+            json.dump(data, f, indent=4)
+
+
 
 elif firstDir == 3:
     print("\nYou go down the center")
     print("You walk over the bridge and continue on")
+
     
 
 # data[profile][0] = Username
